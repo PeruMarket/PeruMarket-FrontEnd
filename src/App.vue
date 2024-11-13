@@ -1,4 +1,4 @@
-<script>
+<script setup>
 
 </script>
 
@@ -6,6 +6,6 @@
   <router-view></router-view>
 </template>
 
-<style>
+<style scoped>
 
 </style>

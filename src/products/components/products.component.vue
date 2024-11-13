@@ -23,7 +23,7 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-left: 11rem;
+  margin-left: 22rem;
 }
 
 @media (max-width: 860px) {
