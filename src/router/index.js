@@ -4,11 +4,13 @@ import RegistrationViewComponent from "../public/pages/registration-view.compone
 import ProductsViewComponent from "../public/pages/products-view.component.vue";
 import LoginViewComponent from "../public/pages/login-view.component.vue";
 import RegisterViewComponent from "../public/pages/register-view.component.vue";
+import HomeViewComponent from "../public/pages/home-view.component.vue";
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        {path:'/', redirect:'/clients'},
+        {path:'/', redirect:'/home'},
+        {path:'/home', component : HomeViewComponent},
         {path:'/login', component : LoginViewComponent},
         {path:'/register', component : RegisterViewComponent},
         {path:'/clients', component:ClientsViewComponent},
