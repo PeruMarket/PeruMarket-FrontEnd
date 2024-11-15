@@ -10,4 +10,7 @@ export class IamApiService {
     findUserWithEmailAndPassword(email, password) {
         return http.get(`/users/?email=${email}&password=${password}`);
     }
+    getAllUsers() {
+        return http.get('/users');
+    }
 }

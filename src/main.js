@@ -14,6 +14,10 @@ import ToastService from 'primevue/toastservice';
 import Sidebar from 'primevue/sidebar';
 
 import router from "./router/index.js";
+import Column from "primevue/column";
+import Card from "primevue/card";
+import DataTable from "primevue/datatable";
+import Dialog from "primevue/dialog";
 
 const app = createApp(App);
 
@@ -22,5 +26,10 @@ app.use(PrimeVue,{ripple:true})
     .use(router)
     .component('pv-sidebar', Sidebar)
     .component('pv-button', Button)
+    .component('pv-card', Card)
+    .component('pv-table', DataTable)
+    .component('pv-column', Column)
+    .component('pv-dialog', Dialog)
+
 
 app.mount('#app')
