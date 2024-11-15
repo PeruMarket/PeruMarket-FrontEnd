@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-    baseURL : API_BASE_URL,
+    baseURL : "https://my-json-server.typicode.com/PeruMarket/PeruMarket-fakeapi",
     headers:{'Content-type':'application/json'}
 });
 

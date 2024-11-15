@@ -9,13 +9,13 @@ import HomeViewComponent from "../public/pages/home-view.component.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        {path:'/', redirect:'/home'},
+        {path:'/', redirect:'/:id/clients'}, // Cambia el numero de id entre 1 y 2 pa probar
         {path:'/home', component : HomeViewComponent},
         {path:'/login', component : LoginViewComponent},
         {path:'/register', component : RegisterViewComponent},
-        {path:'/clients', component:ClientsViewComponent},
-        {path:'/registration', component:RegistrationViewComponent},
-        {path:'/products', component:ProductsViewComponent}
+        {path:'/:id/clients', component:ClientsViewComponent},
+        {path:'/:id/registration', component:RegistrationViewComponent},
+        {path:'/:id/products', component:ProductsViewComponent}
     ]
 });
 export default router;
