@@ -1,30 +1,41 @@
 <script>
+import { IamApiService } from "../services/iam-api.service.js";
+
 export default {
   name: "iam-login",
   data() {
     return {
-      user: {
-        email: "",
-        password: "",
-        error: false,
-      },
+      email: "",
+      password: "",
       showPassword: false,
+      error: false,
+      iamApi: new IamApiService(),
+      id: null
     };
   },
   methods: {
     login() {
-      if (!this.user.email || !this.user.password) {
-        this.user.error = true;
-      } else {
-        this.user.error = false;
-        this.goToClients();
-      }
-    },
-    goToRegister() {
-      this.$router.push('/register');
+      this.iamApi.findUserWithEmailAndPassword(this.email, this.password).then(data => {
+        const userInfo = data.data[0];
+        if (userInfo) {
+          this.id = userInfo.id;
+          this.error = false;
+          this.goToClients();
+        } else {
+          this.error = true;
+          alert("Email o contraseña incorrectos.");
+        }
+      }).catch(() => {
+        this.error = true;
+        alert("Hubo un error al conectarse con el servidor.");
+      });
     },
     goToClients() {
-      this.$router.push('/clients');
+      if (this.id) {
+        this.$router.push(`/${this.id}/clients`);
+      } else {
+        console.error("ID de usuario no definido.");
+      }
     },
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
@@ -33,6 +44,7 @@ export default {
 };
 </script>
 
+
 <template>
   <div class="login-container">
     <div class="login-card">
@@ -40,11 +52,11 @@ export default {
       <h1>Iniciar Sesión</h1>
       <form @submit.prevent="login">
         <pv-label for="email" class="input-label">Correo electrónico</pv-label>
-        <pv-input type="email" id="email" v-model="user.email" required class="input-field"/>
+        <pv-input type="email" id="email" v-model="email" required class="input-field"/>
 
         <pv-label for="password" class="input-label">Contraseña</pv-label>
         <div class="password-container">
-          <pv-input :type="showPassword ? 'text' : 'password'" id="password" v-model="user.password" required
+          <pv-input :type="showPassword ? 'text' : 'password'" id="password" v-model="password" required
                     class="input-field"/>
           <pv-button type="button" class="toggle-password" @click="togglePasswordVisibility">
             <i :class="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>

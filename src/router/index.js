@@ -13,9 +13,9 @@ const router = createRouter({
         {path:'/home', component : HomeViewComponent},
         {path:'/login', component : LoginViewComponent},
         {path:'/register', component : RegisterViewComponent},
-        {path:'/clients', component:ClientsViewComponent},
-        {path:'/registration', component:RegistrationViewComponent},
-        {path:'/products', component:ProductsViewComponent}
+        {path:'/:id/clients', component:ClientsViewComponent},
+        {path:'/:id/registration', component:RegistrationViewComponent},
+        {path:'/:id/products', component:ProductsViewComponent}
     ]
 });
 export default router;

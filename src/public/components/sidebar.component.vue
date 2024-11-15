@@ -1,14 +1,27 @@
 <script>
+import {IamApiService} from "../../iam/services/iam-api.service.js";
+
 export default {
   name: "sidebar",
   data() {
     return {
-      name: 'Beatriz',
-      lastName: 'Alarcon',
+      name: "",
+      lastName: "",
       visible: false,
       hamburgerVisible: window.innerWidth <= 860,
-      activeRoute: this.$route.path
+      activeRoute: this.$route.path,
+      id: this.$route.params.id,
+      iamApi: new IamApiService()
     };
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+    this.iamApi.findUserById(this.id).then(data => {
+      this.name = data.data.name;
+      this.lastName = data.data.lastName;
+      console.log(data.data);
+    })
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.handleResize);
@@ -21,16 +34,16 @@ export default {
       this.hamburgerVisible = !this.hamburgerVisible;
     },
     goToClients() {
-      this.$router.push(`/clients`);
-      this.activeRoute = '/clients';
+      this.$router.push(`/${this.id}/clients`);
+      this.activeRoute = `/${this.id}/clients`;
     },
     goToRegistration() {
-      this.$router.push(`/registration`);
-      this.activeRoute = '/registration';
+      this.$router.push(`/${this.id}/registration`);
+      this.activeRoute = `/${this.id}/registration`;
     },
     goToProducts() {
-      this.$router.push(`/products`);
-      this.activeRoute = '/products';
+      this.$router.push(`/${this.id}/products`);
+      this.activeRoute = `/${this.id}/products`;
     },
     logout() {
       this.$router.push('/login');
@@ -58,19 +71,19 @@ export default {
     <div class="menu-container">
       <ul class="list-none p-3 m-0">
         <li @click="goToClients">
-          <a v-ripple :class="['nav-item', { 'active': activeRoute === '/clients' }]" class="flex align-items-center cursor-pointer p-3 border-round">
+          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/clients` }]" class="flex align-items-center cursor-pointer p-3 border-round">
             <i class="pi pi-users mr-2 text-xl"></i>
             <span class="text-xl">Mis clientes</span>
           </a>
         </li>
         <li @click="goToRegistration">
-          <a v-ripple :class="['nav-item', { 'active': activeRoute === '/registration' }]" class="flex align-items-center cursor-pointer p-3 border-round">
+          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/registration` }]" class="flex align-items-center cursor-pointer p-3 border-round">
             <i class="pi pi-clipboard mr-2 text-xl"></i>
             <span class="text-xl">Registrar letras/facturas</span>
           </a>
         </li>
         <li @click="goToProducts">
-          <a v-ripple :class="['nav-item', { 'active': activeRoute === '/products' }]" class="flex align-items-center cursor-pointer p-3 border-round">
+          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/products` }]" class="flex align-items-center cursor-pointer p-3 border-round">
             <i class="pi pi-shop mr-2 text-xl"></i>
             <span class="text-xl">Productos</span>
           </a>
