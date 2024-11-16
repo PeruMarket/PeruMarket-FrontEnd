@@ -29,6 +29,19 @@ h1 {
   padding: 2em;
 }
 
+th {
+  justify-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+td {
+  justify-items: center;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
