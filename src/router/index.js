@@ -5,6 +5,8 @@ import ProductsViewComponent from "../public/pages/products-view.component.vue";
 import LoginViewComponent from "../public/pages/login-view.component.vue";
 import RegisterViewComponent from "../public/pages/register-view.component.vue";
 import HomeViewComponent from "../public/pages/home-view.component.vue";
+import ResultsComponent from "../registration/components/results.component.vue";
+import resultViewComponent from "../public/pages/result-view.component.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -15,7 +17,8 @@ const router = createRouter({
         {path:'/register', component : RegisterViewComponent},
         {path:'/:id/clients', component:ClientsViewComponent},
         {path:'/:id/registration', component:RegistrationViewComponent},
-        {path:'/:id/products', component:ProductsViewComponent}
+        {path:'/:id/products', component:ProductsViewComponent},
+        {path:'/results', component:resultViewComponent}
     ]
 });
 export default router;
