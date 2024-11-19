@@ -79,7 +79,7 @@ export default {
     },
     goToNewProduct() {
       // Redirigir al componente 'NewProduct'
-      this.$router.push("/newproduct");
+      this.$router.push(`/${this.id}/newproduct`);
     },
   },
   created() {

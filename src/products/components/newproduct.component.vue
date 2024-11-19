@@ -1,4 +1,7 @@
 <script>
+import {ProductsApiService} from "../services/products-api.service.js";
+import {ClientsApiService} from "../../clients/services/clients-api.service.js";
+
 export default {
   name: "NewProduct",
   data() {
@@ -6,36 +9,29 @@ export default {
       newProduct: {
         description: "",
         price: "",
-        imageUrl: "", // Esto se usará para almacenar la imagen como Base64
+        imageUrl: "",
       },
-      selectedImage: null, // Para almacenar el archivo de imagen seleccionado
-      apiUrl: "https://my-json-server.typicode.com/PeruMarket/PeruMarket-fakeapi/products",
+      selectedImage: null,
+      idUser: this.$route.params.id,
+      productsApi: new ProductsApiService(),
     };
   },
   methods: {
     async submitProduct() {
       try {
-        // Verificar que el usuario haya seleccionado una imagen
         if (!this.newProduct.imageUrl) {
           alert("Por favor, sube una imagen para el producto.");
           return;
         }
 
-        const response = await fetch(this.apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(this.newProduct),
-        });
+        const productWithUser = {
+          ...this.newProduct,
+          idUser: this.idUser,
+        };
 
-        if (!response.ok) {
-          throw new Error(`Error al registrar producto: ${response.statusText}`);
-        }
-
-        const product = await response.json();
-        alert(`Producto registrado exitosamente: ${product.name}`);
-        this.$router.push("/"); // Redirigir al componente principal después de guardar
+        await this.productsApi.createProduct(productWithUser);
+        alert("Producto registrado exitosamente.");
+        this.$router.push(`/${this.idUser}/products`);
       } catch (error) {
         console.error("Error al registrar el producto:", error);
         alert("Hubo un problema al registrar el producto.");
@@ -46,135 +42,58 @@ export default {
       if (file) {
         const reader = new FileReader();
 
-        // Convertir el archivo en Base64
         reader.onload = (e) => {
-          this.newProduct.imageUrl = e.target.result; // Guardar la imagen como Base64
-          this.selectedImage = e.target.result; // Mostrar la vista previa
+          this.newProduct.imageUrl = e.target.result;
+          this.selectedImage = e.target.result;
         };
 
         reader.readAsDataURL(file);
       }
     },
     goBack() {
-      this.$router.push("/:id/products");
+      this.$router.push(`/${this.idUser}/products`);
     },
   },
 };
 </script>
 
 <template>
-<div class="container z-1 header container-products">
-  <div
-      style="
-      display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 0;
-    "
-  >
-    <h2 style="color: #333; margin-bottom: 20px;">Añadir Nuevo Producto</h2>
+  <div class="container z-1 header container-products">
+    <div class="text-100 font-medium text-xl container-info">
+      <h1 class="text-100">Añadir Producto</h1>
+    </div>
+    <div class="form-container">
+      <form @submit.prevent="submitProduct">
+        <label>Descripción:</label>
+        <textarea v-model="newProduct.description" required></textarea>
 
-    <form
-        @submit.prevent="submitProduct"
-        style="
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        max-width: 500px;
-        padding: 20px;
-        border-radius: 10px;
-      "
-    >
+        <label>Precio:</label>
+        <input v-model="newProduct.price" type="number" required />
 
-      <label style="margin-bottom: 10px;">Descripción:</label>
-      <textarea
-          v-model="newProduct.description"
-          required
-          style="
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          margin-bottom: 20px;
-        "
-      ></textarea>
+        <label>Cargar Imagen:</label>
+        <div class="image-preview">
+          <p>Vista previa:</p>
+          <div class="circle-preview">
+            <img v-if="selectedImage" :src="selectedImage" alt="Vista previa de la imagen" />
+          </div>
+        </div>
+        <label for="file-upload" class="custom-file-upload">Seleccionar Imagen</label>
+        <input id="file-upload" type="file" accept="image/*" @change="handleImageUpload" />
 
-      <label style="margin-bottom: 10px;">Precio:</label>
-      <input
-          v-model="newProduct.price"
-          type="number"
-          required
-          style="
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          margin-bottom: 20px;
-        "
-      />
 
-      <label style="margin-bottom: 10px;">Cargar Imagen:</label>
-      <input
-          type="file"
-          accept="image/*"
-          @change="handleImageUpload"
-          style="
-          margin-bottom: 20px;
-        "
-      />
-
-      <!-- Mostrar una vista previa de la imagen si se ha cargado -->
-      <div v-if="selectedImage" style="margin-bottom: 20px; text-align: center;">
-        <p style="margin-bottom: 10px;">Vista previa:</p>
-        <img
-            :src="selectedImage"
-            alt="Vista previa de la imagen"
-            style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 5px;"
-        />
-      </div>
-
-      <button
-          type="submit"
-          style="
-          background-color: #4caf50;
-          color: white;
-          padding: 10px 20px;
-          font-size: 1rem;
-          border: none;
-          cursor: pointer;
-          border-radius: 5px;
-          font-weight: bold;
-          margin-bottom: 10px;
-        "
-      >
-        Guardar
-      </button>
-
-      <button
-          type="button"
-          @click="goBack"
-          style="
-          background-color: #e74c3c;
-          color: white;
-          padding: 10px 20px;
-          font-size: 1rem;
-          border: none;
-          cursor: pointer;
-          border-radius: 5px;
-          font-weight: bold;
-        "
-      >
-        Cancelar
-      </button>
-    </form>
+        <button type="submit">Guardar</button>
+        <button type="button" @click="goBack">Cancelar</button>
+      </form>
+    </div>
   </div>
-</div>
 </template>
-
 
 <style scoped>
 .container-products {
-  display: flex !important;
-  align-content: flex-start !important;
-  align-items: flex-start !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   margin-left: 0;
 }
 
@@ -183,12 +102,133 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-left: 22rem;
+  padding: 2rem;
+  margin-left: 20rem;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f2f1f1;
+  align-items: center;
 }
 
-@media (max-width: 860px) {
-  .container {
-    margin-left: 0;
-  }
+.container-info h1 {
+  color: #BB9776 !important;
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
+}
+.form-container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #7a5a4a;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  text-align: left;
+}
+
+textarea,
+input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+label[for="file-upload"] {
+  display: inline-block;
+  background-color: #d2b89f;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+label[for="file-upload"]:hover {
+  background-color: #b89e86;
+}
+
+.image-preview {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+}
+
+.circle-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px dashed #bbb;
+  margin: 0 auto 1rem;
+}
+
+.circle-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Botones */
+button[type="submit"],
+button[type="button"] {
+  font-size: 1rem;
+  padding: 0.7rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0.5rem;
+  width: 100%;
+  max-width: 150px;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+button[type="button"] {
+  background-color: #f44336;
+  color: #fff;
+}
+
+button[type="button"]:hover {
+  background-color: #d32f2f;
 }
 </style>
