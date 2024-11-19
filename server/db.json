@@ -1,0 +1,112 @@
+{
+	"users": [
+		{
+			"id": 1,
+			"name": "Beatriz",
+			"lastName": "Alarcon",
+			"email": "beatriz.alarcon@fakemail.com",
+			"password": "12345678",
+			"clients": [
+				{
+					"idClient": "1"
+				},
+				{
+					"idClient": "2"
+				},
+				{
+					"idClient": "3"
+				}
+			],
+			"products": [
+				{
+					"idProduct": "1"
+				},
+				{
+					"idProduct": "2"
+				},
+				{
+					"idProduct": "3"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"name": "Esteban",
+			"lastName": "Quito",
+			"email": "esteban.quito@fakemail.com",
+			"password": "87654321",
+			"clients": [
+				{
+					"idClient": "1"
+				},
+				{
+					"idClient": "2"
+				}
+			],
+			"products": [
+				{
+					"idProduct": "1"
+				},
+				{
+					"idProduct": "2"
+				}
+			]
+		}
+		
+	],
+	"client": [
+		{
+			"id": 1,
+			"name": "Oscar",
+			"lastName": "Pacherres",
+			"email": "oscar.pacherres@fakemail.com",
+			"dni": 12345678
+		},
+		{
+			"id": 2,
+			"name": "Lucas",
+			"lastName": "Zevallos",
+			"email": "lucas.zevallos@fakemail.com",
+			"dni": 12345678
+		},
+		{
+			"id": 3,
+			"name": "Alicia",
+			"lastName": "Zuñiga",
+			"email": "alicia.zuñiga@fakemail.com",
+			"dni": 12345678
+		}
+	],
+	"product": [
+		{
+			"id": 1,
+			"productImg": "https://plazavea.vteximg.com.br/arquivos/ids/561004-512-512/20130771.jpg",
+			"description": "Caja de Bombones Bon O Bon",
+			"cost": 22.00
+		},
+		{
+			"id": 2,
+			"productImg": "https://plazavea.vteximg.com.br/arquivos/ids/23372902-450-450/20109838.jpg",
+			"description": "Lenteja Tesoro del Campo 500g",
+			"cost": 5.90
+		},
+		{
+			"id": 3,
+			"productImg": "https://aceleralastatic.nyc3.cdn.digitaloceanspaces.com/files/uploads/1499/1601678692-94-104-1-1-jpg.jpg",
+			"description": "Yogurt Griego Gloria 120g",
+			"cost": 2.20
+		}
+	],
+	"invoice": [
+		{
+			"id": 1,
+			"idClient": "",
+			"TCEA": 0.0,
+			"withinholding": 0,
+			"endDate": 0,
+			"netValue": 0.0,
+			"valueReceived": 0.0,
+			"valueDelivered": 0.0
+		}
+	]
+}

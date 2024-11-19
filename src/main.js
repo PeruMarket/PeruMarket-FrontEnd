@@ -21,6 +21,7 @@ import Column from "primevue/column";
 import Card from "primevue/card";
 import DataTable from "primevue/datatable";
 import Dialog from "primevue/dialog";
+import Calendar from "primevue/calendar";
 
 const app = createApp(App);
 
@@ -36,6 +37,6 @@ app.use(PrimeVue,{ripple:true})
     .component('pv-table', DataTable)
     .component('pv-column', Column)
     .component('pv-dialog', Dialog)
-
+    .component('pv-calendar', Calendar)
 
 app.mount('#app')

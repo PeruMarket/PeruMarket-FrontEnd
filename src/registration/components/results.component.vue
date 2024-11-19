@@ -1,114 +1,183 @@
 <script>
 export default {
-  name: "results.component",
-  data () {
-    return {
-      days: "",
-      rate: "",
-      vr: "",
-      delivered: "",
-      tcea: ""
+  name: "results",
+  computed: {
+    diasDescontar() {
+      return parseFloat(this.$route.query.diasDescontar);
+    },
+    tasaDescontada() {
+      return parseFloat(this.$route.query.tasaDescontada);
+    },
+    valorNeto() {
+      return parseFloat(this.$route.query.valorNeto);
+    },
+    valorRecibido() {
+      return parseFloat(this.$route.query.valorRecibido);
+    },
+    valorEntregado() {
+      return parseFloat(this.$route.query.valorEntregado);
+    },
+    TCEA() {
+      return parseFloat(this.$route.query.TCEA);
     }
   },
   methods: {
-    submitForm() {
-      this.days = "";
-      this.rate= "";
-      this.vr= "";
-      this.delivered= "";
-      this.tcea= "";
-    },
     acceptResult() {
       this.$router.push('/:id/registration');
     }
   },
-
 }
-
 </script>
 
 <template>
   <div class="container z-1 header container-registration">
-  <div style="padding: 2rem; font-family: Arial, sans-serif;">
-    <h1 style="color: #B69B84; font-size: 1.25rem; margin-bottom: 0.5rem;">Registrar letras/facturas</h1>
-    <div style="border-top: 1px solid #B69B84; margin-bottom: 2rem;"></div>
+    <div class="text-100 font-medium text-xl container-info">
+      <h1 class="text-100">Registrar letras/facturas</h1>
+    </div>
 
-    <form style="max-width: 600px;">
-      <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-        <div style="width: 48%;">
-          <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 0.25rem;">Días de descuento:</label>
-          <input
-              type="text"
-              style="width: 100%; padding: 0.5rem; background-color: #e0e0e0; border: none; border-radius: 4px;"
-          />
+      <form class="form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Días de descuento:</label>
+            <input :value="diasDescontar" disabled class="input" />
+          </div>
+          <div class="form-group">
+            <label>Tasa descontada:</label>
+            <input :value="tasaDescontada" disabled class="input" />
+          </div>
         </div>
-        <div style="width: 48%;">
-          <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 0.25rem;">Tasa descontada:</label>
-          <input
-              type="text"
-              style="width: 100%; padding: 0.5rem; background-color: #e0e0e0; border: none; border-radius: 4px;"
-          />
-        </div>
-      </div>
 
-      <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-        <div style="width: 48%;">
-          <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 0.25rem;">Valor recibido (VR):</label>
-          <input
-              type="text"
-              style="width: 100%; padding: 0.5rem; background-color: #e0e0e0; border: none; border-radius: 4px;"
-          />
+        <div class="form-group">
+          <label>Valor neto (VN):</label>
+          <input :value="valorNeto" disabled class="input" />
         </div>
-        <div style="width: 48%;">
-          <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 0.25rem;">Valor entregado:</label>
-          <input
-              type="text"
-              style="width: 100%; padding: 0.5rem; background-color: #e0e0e0; border: none; border-radius: 4px;"
-          />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Valor recibido (VR):</label>
+            <input :value="valorRecibido" disabled class="input" />
+          </div>
+          <div class="form-group">
+            <label>Valor entregado:</label>
+            <input :value="valorEntregado" disabled class="input" />
+          </div>
         </div>
-      </div>
 
-      <div style="margin-bottom: 2rem;">
-        <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 0.25rem;">Tasa de Costo Efectiva Anual (TCEA):</label>
-        <input
-            type="text"
-            style="width: 48%; padding: 0.5rem; background-color: #e0e0e0; border: none; border-radius: 4px;"
-        />
-      </div>
+        <div class="form-group">
+          <label>Tasa de Costo Efectiva Anual (TCEA):</label>
+          <input :value="TCEA" disabled class="input" />
+        </div>
 
-      <div style="text-align: center;">
-        <button
-            type="submit"
-            @click="acceptResult"
-            style="padding: 0.5rem 2rem; background-color: #4ADE80; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem;"
-        >
-          Volver
-        </button>
-      </div>
-    </form>
+        <div class="form-footer">
+          <button type="submit" @click="acceptResult" class="btn btn-accept">Volver</button>
+        </div>
+      </form>
   </div>
-</div>
 </template>
 
 <style scoped>
-.container-registration {
-  display: flex !important;
-  align-content: flex-start !important;
-  align-items: flex-start !important;
-  margin-left: 0;
-}
 
 .container {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   gap: 1rem;
-  margin-left: 22rem !important;
+  padding: 2rem;
+  margin-left: 20rem;
+  background-color: #f2f1f1;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
 }
 
+/* Container */
+.container-registration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.container-info h1 {
+  color: #BB9776 !important;
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Form */
+.form {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Input fields */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  color: var(--text-color);
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Footer */
+.form-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Button */
+.btn {
+  padding: 0.75rem 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-accept {
+  background-color: var(--primary-color);
+}
+
+/* Responsiveness */
 @media (max-width: 860px) {
-  .container {
-    margin-left: 0;
+  .container-registration {
+    padding: 1rem;
+  }
+
+  .form {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
   }
 }
 </style>
