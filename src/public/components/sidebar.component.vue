@@ -58,13 +58,11 @@ export default {
 </script>
 
 <template>
-  <pv-sidebar class="p-col-20 p-md-6 p-xl-4 sidebar" :visible="!hamburgerVisible" :showCloseIcon="false"
-              :showHeader="false" :dismissable="true">
+  <pv-sidebar class="p-col-20 p-md-6 p-xl-4 sidebar" :visible="!hamburgerVisible" :showCloseIcon="false" :showHeader="false" :dismissable="true">
     <pv-button icon="pi pi-times" text rounded aria-label="Cancel" class="close-button" @click="toggleHamburger">
     </pv-button>
     <div class="flex flex-column align-items-center">
-      <img src="https://www.caritas.org.mx/wp-content/uploads/2019/02/cualidades-persona-humanitaria.jpg" id="icon"
-           alt="User Icon" class="custom-image">
+      <img src="https://www.caritas.org.mx/wp-content/uploads/2019/02/cualidades-persona-humanitaria.jpg" id="icon" alt="User Icon" class="custom-image">
       <div class="text-center mt-3">
         <h2 class="text">{{ name }}</h2>
         <h2 class="text">{{ lastName }}</h2>
@@ -73,22 +71,19 @@ export default {
     <div class="menu-container">
       <ul class="list-none p-3 m-0">
         <li @click="goToClients">
-          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/clients` }]"
-             class="flex align-items-center cursor-pointer p-3 border-round">
+          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/clients` }]" class="flex align-items-center cursor-pointer p-3 border-round">
             <i class="pi pi-users mr-2 text-xl"></i>
             <span class="text-xl">Mis clientes</span>
           </a>
         </li>
         <li @click="goToRegistration">
-          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/registration` }]"
-             class="flex align-items-center cursor-pointer p-3 border-round">
+          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/registration` }]" class="flex align-items-center cursor-pointer p-3 border-round">
             <i class="pi pi-clipboard mr-2 text-xl"></i>
             <span class="text-xl">Registrar letras/facturas</span>
           </a>
         </li>
         <li @click="goToProducts">
-          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/products` }]"
-             class="flex align-items-center cursor-pointer p-3 border-round">
+          <a v-ripple :class="['nav-item', { 'active': activeRoute === `/${this.id}/products` }]" class="flex align-items-center cursor-pointer p-3 border-round">
             <i class="pi pi-shop mr-2 text-xl"></i>
             <span class="text-xl">Productos</span>
           </a>
@@ -98,8 +93,7 @@ export default {
     <div class="logout-container">
       <ul class="list-none p-3 m-0">
         <li @click="logout">
-          <a v-ripple :class="['nav-item', { 'active': activeRoute === '/login' }]"
-             class="flex align-items-center cursor-pointer p-3 border-round">
+          <a v-ripple :class="['nav-item', { 'active': activeRoute === '/login' }]" class="flex align-items-center cursor-pointer p-3 border-round">
             <i class="pi pi-sign-out mr-2 text-xl"></i>
             <span class="text-xl">Cerrar sesión</span>
           </a>

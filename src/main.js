@@ -12,8 +12,10 @@ import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
 import ToastService from 'primevue/toastservice';
 import Sidebar from 'primevue/sidebar';
-
 import router from "./router/index.js";
+import InputText from "primevue/inputtext";
+import FloatLabel from "primevue/floatlabel";
+import Checkbox from "primevue/checkbox";
 
 const app = createApp(App);
 
@@ -22,5 +24,8 @@ app.use(PrimeVue,{ripple:true})
     .use(router)
     .component('pv-sidebar', Sidebar)
     .component('pv-button', Button)
+    .component('pv-input', InputText)
+    .component('pv-label', FloatLabel)
+    .component('pv-checkbox', Checkbox)
 
 app.mount('#app')
