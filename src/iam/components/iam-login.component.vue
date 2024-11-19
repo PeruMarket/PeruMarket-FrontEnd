@@ -37,6 +37,9 @@ export default {
         console.error("ID de usuario no definido.");
       }
     },
+    goToRegister() {
+      this.$router.push('/register');
+    },
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
